@@ -1,5 +1,5 @@
 from collections import Counter
-import json
+import csv
 
 
 def preprocess_text(text):
@@ -39,7 +39,7 @@ def most_common_words(book_file, ignr, num_words=1):
         word_counts = Counter(tocount)  # Count the occurrences of each word
         most_common = word_counts.most_common(num_words)  # Find the most common word(s)
 
-    return most_common  # return words and counts 
+    return most_common  # return words and counts
 
 
 book = "pogo_planet.txt"
@@ -52,7 +52,10 @@ print("The {} most common word(s) are:".format(num_words))
 for word, count in most_common:
     print("Word: '{}', Count: {}".format(word, count))
 
-output_file = "words.json"
-with open(output_file, 'w') as json_file:
-    json.dump(most_common, json_file)
+csv_file = 'word_list.csv'
+
+with open(csv_file, 'w', newline='') as file:
+    writer = csv.writer(file)
+    for word in most_common:
+        writer.writerow([word[0]])
 
